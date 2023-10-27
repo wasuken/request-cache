@@ -1,0 +1,44 @@
+.formContainer {
+  background-color: white;
+  border: 2px solid skyblue;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px;
+}
+
+.fieldGroup {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.label {
+  flex: 1;
+}
+
+.inputField,
+.selectField,
+.button {
+  flex: 2;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.inputField:focus,
+.selectField:focus,
+.button:focus {
+  border-color: skyblue;
+  box-shadow: 0 0 5px skyblue;
+}
+
+.button {
+  background-color: skyblue;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: deepskyblue;
+}

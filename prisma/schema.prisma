@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model UrlInfo {
+  id             Int            @id @default(autoincrement())
+  title          String
+  description    String
+  url            String
+  get_timing_sec Int
+
+  queueList      UrlInfoQueue[]
+
+  createdAt           DateTime              @default(now())
+  UrlInfoQueueHistory UrlInfoQueueHistory[]
+}
+
+model UrlInfoQueue {
+  id            Int      @id @default(autoincrement())
+  urlInfoId     Int
+  urlInfo       UrlInfo  @relation(fields: [urlInfoId], references: [id])
+  exec_datetime DateTime @default(now())
+  createdAt     DateTime @default(now())
+}
+
+model UrlInfoQueueHistory {
+  id            Int      @id @default(autoincrement())
+  urlInfoId     Int
+  urlInfo       UrlInfo  @relation(fields: [urlInfoId], references: [id])
+  exec_datetime DateTime @default(now())
+  response      String
+  result        Boolean  @default(false)
+  createdAt     DateTime @default(now())
+}

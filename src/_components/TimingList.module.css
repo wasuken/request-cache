@@ -1,0 +1,29 @@
+/* TimingList.module.css */
+.timingList {
+  background-color: white;
+  color: #333;
+}
+
+.title {
+  color: skyblue;
+  font-size: 1.5rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.table th {
+  background-color: skyblue;
+}
+
+.table td {
+  background-color: #f9f9f9;
+}
