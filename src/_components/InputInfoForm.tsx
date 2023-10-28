@@ -16,7 +16,15 @@ export default function InputInfoForm(props: IProps) {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [url, setUrl] = useState<string>("");
-  const [timing, setTiming] = useState<number>(0);
+  const [timing, setTiming] = useState<number>(300);
+
+  const hhandleSubmit = () => {
+    handleSubmit(title, description, url, timing);
+    setTitle("")
+    setDescription("")
+    setUrl("")
+    setTiming(300);
+  }
 
   return (
     <div className={styles.formContainer}>
@@ -67,6 +75,7 @@ export default function InputInfoForm(props: IProps) {
 	<input
 	  id="timing"
 	  type="number"
+	  min="500"
 	  className={styles.inputField}
 	  value={timing}
 	  onChange={(e) => setTiming(parseInt(e.target.value))}

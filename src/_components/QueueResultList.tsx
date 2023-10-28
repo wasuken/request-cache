@@ -5,13 +5,14 @@ import styles from "./QueueResultList.module.css";
 import { QueueResult } from "@/_const/types";
 
 interface IProps {
+  title: string;
   queueResults: QueueResult[];
 }
 
-const QueueResultList: React.FC<IProps> = ({ queueResults }) => {
+const QueueResultList: React.FC<IProps> = ({ queueResults, title }) => {
   return (
     <div className={styles.queueResultList}>
-      <h2 className={styles.title}>API取得結果一覧</h2>
+      <h2 className={styles.title}>{title}</h2>
       <table className={styles.table}>
 	<thead>
 	  <tr>
