@@ -13,12 +13,12 @@ const Page = () => {
       const resj = await res.json();
       console.log(resj);
       setQueues(
-	resj.queues.map((x) => {
-	  return {
-	    ...x,
-	    exec_datetime: new Date(x.exec_datetime),
-	  };
-	})
+        resj.queues.map((x) => {
+          return {
+            ...x,
+            exec_datetime: new Date(x.exec_datetime),
+          };
+        })
       );
     }
   };
@@ -28,12 +28,12 @@ const Page = () => {
       const resj = await res.json();
       console.log(resj);
       setQueueResults(
-	resj.queueResults.map((x) => {
-	  return {
-	    ...x,
-	    exec_datetime: new Date(x.exec_datetime),
-	  };
-	})
+        resj.queueResults.map((x) => {
+          return {
+            ...x,
+            exec_datetime: new Date(x.exec_datetime),
+          };
+        })
       );
     }
   };
@@ -45,10 +45,10 @@ const Page = () => {
   return (
     <>
       <div>
-	<a href="/">back</a>
+        <a href="/">back</a>
       </div>
-      <QueueList queues={queues} />
-      <QueueResultList queueResults={queueResults} />
+      <QueueList queues={queues} title="QueueList" />
+      <QueueResultList queueResults={queueResults} title="QueueResultList" />
     </>
   );
 };

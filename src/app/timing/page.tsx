@@ -42,7 +42,7 @@ const Page = () => {
 	<a href="/">back</a>
       </div>
       <InputInfoForm handleSubmit={handleSubmit} />
-      <TimingList timings={timings} />
+      <TimingList timings={timings} title="TimingList" />
     </>
   );
 };

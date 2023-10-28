@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../../../../tmp/!home!wasu!dev!request-cache!src!app!api!queues!route.ts~"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../../../../tmp/!home!wasu!dev!request-cache!src!app!api!queues!route.ts~", "../../../../tmp/!home!wasu!dev!request-cache!src!app!api!cron!route.ts~"],
   "exclude": ["node_modules"]
 }
