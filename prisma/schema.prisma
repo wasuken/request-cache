@@ -20,7 +20,7 @@ model UrlInfo {
   queueList      UrlInfoQueue[]
 
   createdAt           DateTime              @default(now())
-  UrlInfoQueueHistory UrlInfoQueueHistory[]
+  UrlInfoQueueResult UrlInfoQueueResult[]
 }
 
 model UrlInfoQueue {
@@ -31,7 +31,7 @@ model UrlInfoQueue {
   createdAt     DateTime @default(now())
 }
 
-model UrlInfoQueueHistory {
+model UrlInfoQueueResult {
   id            Int      @id @default(autoincrement())
   urlInfoId     Int
   urlInfo       UrlInfo  @relation(fields: [urlInfoId], references: [id])

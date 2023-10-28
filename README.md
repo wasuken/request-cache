@@ -39,6 +39,6 @@ url_infoへの登録と登録した内容一覧の確認がおこなえる。
 
 page path: /queue
 
-利用API: /api/queue, /api/queues, /api/queue/history
+利用API: /api/queues, /api/queues/history
 
 キューにたまっている内容と結果を表示する。

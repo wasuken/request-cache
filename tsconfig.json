@@ -15,13 +15,13 @@
     "incremental": true,
     "plugins": [
       {
-        "name": "next"
+	"name": "next"
       }
     ],
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../../../../tmp/!home!wasu!dev!request-cache!src!app!api!queues!route.ts~"],
   "exclude": ["node_modules"]
 }
