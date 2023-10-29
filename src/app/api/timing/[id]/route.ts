@@ -16,6 +16,6 @@ export async function PUT(req: Request, _res: Response) {
       description,
       get_timing_sec: timing,
     },
-  };)
+  });
   return NextResponse.json({ msg: "success" });
 }
