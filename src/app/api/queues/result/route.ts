@@ -8,6 +8,7 @@ export async function GET() {
     include: {
       urlInfo: true,
     },
+    take: 10,
   });
   return NextResponse.json({ queueResults });
 }
