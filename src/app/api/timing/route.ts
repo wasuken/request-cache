@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 export async function POST(req: Request, _res: Response) {
   const data = await req.json();
-  console.log("cron-debug", data);
   const { title, url, description, timing } = data;
   const info = await prisma.urlInfo.create({
     data: {
