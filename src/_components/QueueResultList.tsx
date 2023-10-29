@@ -19,20 +19,24 @@ const QueueResultList: React.FC<IProps> = ({ queueResults, title }) => {
 	    <th>タイトル</th>
 	    <th>URL</th>
 	    <th>実行日時</th>
-      <th>実行結果内容</th>
+	    <th>実行結果内容</th>
 	  </tr>
 	</thead>
 	<tbody>
 	  {queueResults.map((queueResult) => (
-	    <tr key={queue.id}>
+	    <tr key={queueResult.id}>
 	      <td>
-		{queueResult.title.length > 50
+		{queueResult.urlInfo.title.length > 50
 		  ? queueResult.urlInfo.title.substring(0, 47) + "..."
 		  : queueResult.urlInfo.title}
 	      </td>
 	      <td>{queueResult.urlInfo.url}</td>
-	      <td>{queueResult.exec_datetime.toLocaleString('ja-JP')}</td>
-	      <td>{queueResult.response}</td>
+	      <td>{queueResult.exec_datetime.toLocaleString("ja-JP")}</td>
+	      <td>
+		{queueResult.response.length > 200
+		  ? queueResult.response.substring(0, 197) + "..."
+		  : queueResult.response}
+	      </td>
 	    </tr>
 	  ))}
 	</tbody>
