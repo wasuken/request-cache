@@ -3,11 +3,15 @@ import QueueList from "@/_components/QueueList";
 import QueueResultList from "@/_components/QueueResultList";
 import { Queue, QueueResult } from "@/_const/types";
 import { useState, useEffect } from "react";
+import styles from "./Page.module.css";
 
 const Page = () => {
   const [queues, setQueues] = useState<Queue[]>([]);
   const [queueResults, setQueueResults] = useState<QueueResult[]>([]);
+  const [queueLoading, setQueueLoading] = useState<boolean>(false);
+  const [queueResultLoading, setQueueResultLoading] = useState<boolean>(false);
   const fetchQueueList = async () => {
+    setQueueLoading(true);
     const res = await fetch(`/api/queues`);
     if (res.ok) {
       const resj = await res.json();
@@ -21,8 +25,10 @@ const Page = () => {
         })
       );
     }
+    setQueueLoading(false);
   };
   const fetchQueueResultList = async () => {
+    setQueueResultLoading(true);
     const res = await fetch(`/api/queues/result`);
     if (res.ok) {
       const resj = await res.json();
@@ -36,6 +42,7 @@ const Page = () => {
         })
       );
     }
+    setQueueResultLoading(false);
   };
   useEffect(() => {
     fetchQueueList().then(() => console.log("fetched queue list."));
@@ -47,8 +54,16 @@ const Page = () => {
       <div>
         <a href="/">back</a>
       </div>
-      <QueueList queues={queues} title="QueueList" />
-      <QueueResultList queueResults={queueResults} title="QueueResultList" />
+      {queueLoading ? (
+        <div className={styles.loadingSpinner}></div>
+      ) : (
+        <QueueList queues={queues} title="QueueList" />
+      )}
+      {queueResultLoading ? (
+        <div className={styles.loadingSpinner}></div>
+      ) : (
+        <QueueResultList queueResults={queueResults} title="QueueResultList" />
+      )}
     </>
   );
 };
