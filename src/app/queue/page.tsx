@@ -15,14 +15,13 @@ const Page = () => {
     const res = await fetch(`/api/queues`);
     if (res.ok) {
       const resj = await res.json();
-      console.log(resj);
       setQueues(
-        resj.queues.map((x) => {
-          return {
-            ...x,
-            exec_datetime: new Date(x.exec_datetime),
-          };
-        })
+	resj.queues.map((x) => {
+	  return {
+	    ...x,
+	    exec_datetime: new Date(x.exec_datetime),
+	  };
+	})
       );
     }
     setQueueLoading(false);
@@ -34,12 +33,12 @@ const Page = () => {
       const resj = await res.json();
       console.log(resj);
       setQueueResults(
-        resj.queueResults.map((x) => {
-          return {
-            ...x,
-            exec_datetime: new Date(x.exec_datetime),
-          };
-        })
+	resj.queueResults.map((x) => {
+	  return {
+	    ...x,
+	    exec_datetime: new Date(x.exec_datetime),
+	  };
+	})
       );
     }
     setQueueResultLoading(false);
@@ -52,17 +51,17 @@ const Page = () => {
   return (
     <>
       <div>
-        <a href="/">back</a>
+	<a href="/">back</a>
       </div>
       {queueLoading ? (
-        <div className={styles.loadingSpinner}></div>
+	<div className={styles.loadingSpinner}></div>
       ) : (
-        <QueueList queues={queues} title="QueueList" />
+	<QueueList queues={queues} title="QueueList" />
       )}
       {queueResultLoading ? (
-        <div className={styles.loadingSpinner}></div>
+	<div className={styles.loadingSpinner}></div>
       ) : (
-        <QueueResultList queueResults={queueResults} title="QueueResultList" />
+	<QueueResultList queueResults={queueResults} title="QueueResultList" />
       )}
     </>
   );

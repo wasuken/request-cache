@@ -9,6 +9,9 @@ export async function GET() {
       urlInfo: true,
     },
     take: 10,
+    orderBy:{
+      createdAt: 'desc',
+    },
   });
   return NextResponse.json({ queueResults });
 }
