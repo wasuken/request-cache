@@ -3,8 +3,11 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function GET(req: Request, { params }) {
-  const id = params.id;
+export async function GET(
+  req: Request,
+  { params }: { params: { id: number; num: number } }
+) {
+  const { id, num } = params;
   const queueResults = await prisma.urlInfoQueueResult.findMany({
     where: {
       id: id,

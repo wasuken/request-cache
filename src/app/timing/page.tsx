@@ -5,11 +5,18 @@ import { Timing } from "@/_const/types";
 import { useState, useEffect } from "react";
 import styles from "./Page.module.css";
 
+interface HandleSubmitParams {
+  title: string;
+  description: string;
+  url: string;
+  timing: number;
+}
+
 const Page = () => {
   const [timings, setTimings] = useState<Timing[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = async (data) => {
+  const handleSubmit = async (data: HandleSubmitParams) => {
     const { title, description, url, timing } = data;
     const res = await fetch(`/api/timing`, {
       method: "POST",

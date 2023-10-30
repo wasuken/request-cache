@@ -1,15 +1,17 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./InputInfoForm.module.css";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+interface FieldValues {
+  title: string;
+  description: string;
+  url: string;
+  timing: number;
+}
 
 interface IProps {
-  handleSubmit: (
-    title: string,
-    description: string,
-    url: string,
-    timing: number
-  ) => Promise<void>;
+  handleSubmit: SubmitHandler<FieldValues>;
 }
 
 export default function InputInfoForm(props: IProps) {
@@ -19,15 +21,7 @@ export default function InputInfoForm(props: IProps) {
     register,
     handleSubmit: handleFormSubmit,
     formState: { errors },
-  } = useForm();
-
-  const hhandleSubmit = () => {
-    handleSubmit(title, description, url, timing);
-    setValue("title", "");
-    setValue("description", "");
-    setValue("url", "");
-    setValue("timing", 300);
-  };
+  } = useForm<FieldValues>();
 
   return (
     <form

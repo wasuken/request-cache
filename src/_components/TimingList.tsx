@@ -35,7 +35,9 @@ const TimingList: React.FC<IProps> = ({
     setTiming(tm.get_timing_sec);
   };
   const endEdit = async () => {
+    if (!editIndex) return;
     const tm: Timing = timings[editIndex];
+    if (!tm) return;
     await onUpdate(tm.id, title, description, url, timing);
     setEditIndex(null);
   };
