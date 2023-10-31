@@ -21,12 +21,16 @@ export default function InputInfoForm(props: IProps) {
     register,
     handleSubmit: handleFormSubmit,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>();
 
   return (
     <form
       className={styles.formContainer}
-      onSubmit={handleFormSubmit(handleSubmit)}
+      onSubmit={handleFormSubmit((...params) => {
+        reset();
+        handleSubmit(...params);
+      })}
     >
       <div className={styles.fieldGroup}>
         <label htmlFor="title" className={styles.label}>
