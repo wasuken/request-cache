@@ -36,7 +36,6 @@ const Page = () => {
     const res = await fetch(`/api/queues/result`);
     if (res.ok) {
       const resj = await res.json();
-      console.log(resj);
       setQueueResults(
         resj.queueResults.map((x: QueueResultAPIResult) => {
           return {

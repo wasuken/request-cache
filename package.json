@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "dotenv -e .env.production -- next build",
+    "start": "dotenv -e .env.production -- next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "dotenv-cli": "^7.3.0",
     "eslint": "^8",
     "eslint-config-next": "14.0.0",
     "typescript": "^5"

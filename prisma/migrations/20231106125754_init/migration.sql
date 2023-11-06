@@ -1,0 +1,39 @@
+-- CreateTable
+CREATE TABLE `UrlInfo` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(191) NOT NULL,
+    `description` VARCHAR(191) NOT NULL,
+    `url` VARCHAR(191) NOT NULL,
+    `get_timing_sec` INTEGER NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `UrlInfoQueue` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `urlInfoId` INTEGER NOT NULL,
+    `exec_datetime` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `UrlInfoQueueResult` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `urlInfoId` INTEGER NOT NULL,
+    `exec_datetime` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `response` VARCHAR(191) NOT NULL,
+    `result` BOOLEAN NOT NULL DEFAULT false,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `UrlInfoQueue` ADD CONSTRAINT `UrlInfoQueue_urlInfoId_fkey` FOREIGN KEY (`urlInfoId`) REFERENCES `UrlInfo`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `UrlInfoQueueResult` ADD CONSTRAINT `UrlInfoQueueResult_urlInfoId_fkey` FOREIGN KEY (`urlInfoId`) REFERENCES `UrlInfo`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function GET() {
+  const qs = await prisma.urlInfoQueue.findMany();
   const queues = await prisma.urlInfoQueue.findMany({
     include: {
       urlInfo: true,
