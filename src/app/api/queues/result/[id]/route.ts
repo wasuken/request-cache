@@ -12,6 +12,9 @@ export async function GET(
     where: {
       id: parseInt(id),
     },
+    include: {
+      urlInfo: true,
+    },
     take: 10,
     orderBy: {
       createdAt: "desc",
