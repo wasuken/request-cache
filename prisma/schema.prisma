@@ -36,7 +36,7 @@ model UrlInfoQueueResult {
   urlInfoId     Int
   urlInfo       UrlInfo  @relation(fields: [urlInfoId], references: [id])
   exec_datetime DateTime @default(now())
-  response      String
+  response      String   @db.Text
   result        Boolean  @default(false)
   createdAt     DateTime @default(now())
 }
