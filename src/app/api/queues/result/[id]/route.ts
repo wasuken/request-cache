@@ -10,16 +10,12 @@ export async function GET(
   const { id, num } = params;
   const queueResults = await prisma.urlInfoQueueResult.findMany({
     where: {
-      id: id,
+      id: parseInt(id),
     },
     take: 10,
     orderBy: {
       createdAt: "desc",
     },
   });
-  if (queueResults.length > 0) {
-    return NextResponse.json({ queueResults }, { status: 200 });
-  } else {
-    return NextResponse.json({ msg: "no queueResults" }, { status: 400 });
-  }
+  return NextResponse.json({ queueResults }, { status: 200 });
 }
