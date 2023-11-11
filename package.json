@@ -4,12 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "dotenv -e .env.production -- next build",
-    "start": "dotenv -e .env.production -- next start",
-    "lint": "next lint"
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "testing": "NODE_ENV=test next dev",
+    "clean": "tsc clean.ts && dotenv -e .env.test -- node clean.js",
+    "test": "NODE_ENV=test tsc autotest.ts && dotenv -e .env.test -- node autotest.js"
   },
   "dependencies": {
     "@prisma/client": "^5.5.2",
+    "dayjs": "^1.11.10",
     "next": "14.0.0",
     "prisma": "^5.5.2",
     "react": "^18",
@@ -17,9 +21,11 @@
     "react-hook-form": "^7.47.0"
   },
   "devDependencies": {
+    "@testing-library/cypress": "^10.0.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cypress": "^13.4.0",
     "dotenv-cli": "^7.3.0",
     "eslint": "^8",
     "eslint-config-next": "14.0.0",

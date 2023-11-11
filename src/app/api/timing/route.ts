@@ -1,6 +1,15 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
+import dayjs from "dayjs";
+
+// プラグインが必要
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 const prisma = new PrismaClient();
 
 export async function POST(req: Request, _res: Response) {
@@ -14,14 +23,13 @@ export async function POST(req: Request, _res: Response) {
       get_timing_sec: timing,
     },
   });
-  const edt = new Date();
-  const iTiming = parseInt(timing)
-  edt.setSeconds(edt.getSeconds() + iTiming);
-  await prisma.urlInfoQueue.create({
+  const iTiming = parseInt(timing);
+  const edt = dayjs().add(iTiming, "s");
+  const urlInfo = await prisma.urlInfoQueue.create({
     data: {
       urlInfoId: info.id,
-      exec_datetime: edt
-    }
+      exec_datetime: edt.toDate(),
+    },
   });
-  return NextResponse.json({ msg: "success" });
+  return NextResponse.json({ msg: "success", urlInfo });
 }

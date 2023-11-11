@@ -1,16 +1,27 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
+import dayjs from "dayjs";
+
+// プラグインが必要
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 const prisma = new PrismaClient();
 
 export async function GET() {
   // const qs = await prisma.urlInfoQueue.findMany();
-  // console.log(qs.map((x) => x.exec_datetime.toLocaleString()));
+  // console.log(
+  //   qs.map((x) => dayjs(x.exec_datetime).format("YYYY-MM-DD H:mm:ss"))
+  // );
   // 実行可能キュー取得
   const queues = await prisma.urlInfoQueue.findMany({
     where: {
       exec_datetime: {
-        lte: new Date(),
+        lte: dayjs().toDate(),
       },
     },
     include: {
@@ -32,21 +43,22 @@ export async function GET() {
         response: text,
         result: res.ok,
         urlInfoId: queues[i].urlInfoId,
-        exec_datetime: new Date(),
+        exec_datetime: dayjs().toDate(),
       },
     });
-    const sdt = new Date();
-    sdt.setSeconds(sdt.getSeconds() + queues[i].urlInfo.get_timing_sec);
+    const sdt = dayjs().add(queues[i].urlInfo.get_timing_sec, "s");
     // 実行後更新
     await prisma.urlInfoQueue.update({
       where: {
         id: queues[i].id,
       },
       data: {
-        exec_datetime: sdt,
+        exec_datetime: sdt.toDate(),
       },
     });
   }
 
-  return NextResponse.json({ msg: "success" });
+  return NextResponse.json({
+    msg: "success",
+  });
 }

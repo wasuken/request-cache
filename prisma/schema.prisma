@@ -26,7 +26,7 @@ model UrlInfo {
 model UrlInfoQueue {
   id            Int      @id @default(autoincrement())
   urlInfoId     Int
-  urlInfo       UrlInfo  @relation(fields: [urlInfoId], references: [id])
+  urlInfo       UrlInfo  @relation(fields: [urlInfoId], references: [id], onDelete: Cascade)
   exec_datetime DateTime @default(now())
   createdAt     DateTime @default(now())
 }
@@ -34,7 +34,7 @@ model UrlInfoQueue {
 model UrlInfoQueueResult {
   id            Int      @id @default(autoincrement())
   urlInfoId     Int
-  urlInfo       UrlInfo  @relation(fields: [urlInfoId], references: [id])
+  urlInfo       UrlInfo  @relation(fields: [urlInfoId], references: [id], onDelete: Cascade)
   exec_datetime DateTime @default(now())
   response      String   @db.Text
   result        Boolean  @default(false)
