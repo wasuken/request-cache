@@ -1,23 +1,23 @@
-Request結果を定期的に取得する
-
 # データ取得サイクル
+
+Request 結果を定期的に取得する
 
 ## 1. 巡回
 
 だいたい一分ごとに処理をまわす想定。以下の処理をおこなう
 
-- url_infoテーブルに登録された内容を元にurl_info_queueに登録を試みる。一度に登録できるものは一つを想定(テーブルとしては複数保持可能)
-- url_info_queueレコードにて、exec_datetimeが現在時刻を超過するレコードが存在した場合、「2. 取得処理」をおこなう。
+- url_info テーブルに登録された内容を元に url_info_queue に登録を試みる。一度に登録できるものは一つを想定(テーブルとしては複数保持可能)
+- url_info_queue レコードにて、exec_datetime が現在時刻を超過するレコードが存在した場合、「2. 取得処理」をおこなう。
 
 ## 2. 取得処理
 
-対象レコードを元にURLにたいして、requestを行い、resultにbodyをいれて、resultに取得結果の可否をいれた上で
+対象レコードを元に URL にたいして、request を行い、result に body をいれて、result に取得結果の可否をいれた上で
 
-url_info_queue_historyに登録する。
+url_info_queue_history に登録する。
 
-その後、url_info_queueにあたらしいレコードを登録する。
+その後、url_info_queue にあたらしいレコードを登録する。
 
-# View関連
+# View 関連
 
 ## top
 
@@ -25,20 +25,20 @@ path: /
 
 /timing, /queue
 
-へのLinkを表示する。
+への Link を表示する。
 
 ## url_info
 
 page path: /timing
 
-利用API: /api/timing, /api/timings
+利用 API: /api/timing, /api/timings
 
-url_infoへの登録と登録した内容一覧の確認がおこなえる。
+url_info への登録と登録した内容一覧の確認がおこなえる。
 
 ## url_info_queue
 
 page path: /queue
 
-利用API: /api/queues, /api/queues/history
+利用 API: /api/queues, /api/queues/history
 
 キューにたまっている内容と結果を表示する。
