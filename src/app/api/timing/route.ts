@@ -23,8 +23,8 @@ export async function POST(req: Request, _res: Response) {
       get_timing_sec: timing,
     },
   });
-  const iTiming = parseInt(timing);
-  const edt = dayjs().add(iTiming, "s");
+  // jobとしてすぐに実行してほしいので10秒前くらいで設定
+  const edt = dayjs().subtruct(10, "s");
   const urlInfo = await prisma.urlInfoQueue.create({
     data: {
       urlInfoId: info.id,
