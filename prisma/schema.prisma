@@ -36,7 +36,7 @@ model UrlInfoQueueResult {
   urlInfoId     Int
   urlInfo       UrlInfo  @relation(fields: [urlInfoId], references: [id], onDelete: Cascade)
   exec_datetime DateTime @default(now())
-  response      String   @db.Text
+  response      String   @db.LongText
   result        Boolean  @default(false)
   createdAt     DateTime @default(now())
 }
