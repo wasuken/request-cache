@@ -5,12 +5,14 @@ const prisma = new PrismaClient();
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: number; num: number } }
+  { params }: { params: { id: number } }
 ) {
-  const { id, num } = params;
+  const { id } = params;
   const queueResults = await prisma.urlInfoQueueResult.findMany({
     where: {
-      id: parseInt(id),
+      urlInfo: {
+        id: parseInt(id),
+      },
     },
     include: {
       urlInfo: true,

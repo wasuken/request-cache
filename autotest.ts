@@ -9,7 +9,7 @@ async function test_200_post_timing() {
     method: "POST",
     body: JSON.stringify({ title, description, url, timing }),
   });
-  const msg = `${res.ok ? "OK":"NG"}: http://localhost:3000/api/timing`
+  const msg = `${res.ok ? "OK" : "NG"}: http://localhost:3000/api/timing`;
   if (res.ok) {
     console.log(msg);
     const resj = await res.json();
@@ -29,7 +29,7 @@ async function test_200_put_timing(id: number) {
     method: "PUT",
     body: JSON.stringify({ id, title, description, url, timing }),
   });
-  const msg = `${res.ok ? "OK":"NG"}: http://localhost:3000/api/timing/${id}`
+  const msg = `${res.ok ? "OK" : "NG"}: http://localhost:3000/api/timing/${id}`;
   if (res.ok) {
     console.log(msg);
   } else {
@@ -40,7 +40,7 @@ async function test_200_put_timing(id: number) {
 
 async function assert_200_get_fetch(url: string) {
   const res = await fetch(url);
-  const msg = `${res.ok ? "OK":"NG"}: ${url}`
+  const msg = `${res.ok ? "OK" : "NG"}: ${url}`;
   if (res.ok) {
     console.log(msg);
   } else {
@@ -67,7 +67,7 @@ async function test_200() {
       (await assert_200_get_fetch(`http://localhost:3000/api/cron`)) &&
       (await assert_200_get_fetch(`http://localhost:3000/api/queues/result`)) &&
       (await assert_200_get_fetch(
-	`http://localhost:3000/api/queues/result/${id}`
+        `http://localhost:3000/api/queues/result/${id}`
       ));
   } else {
     console.error("failed POST.");
@@ -75,10 +75,9 @@ async function test_200() {
   console.log("================ finish ================");
 }
 
-async function run(){
+async function run() {
   await test_200();
   await clean();
 }
-
 
 run().then(() => console.log("finished db clean."));

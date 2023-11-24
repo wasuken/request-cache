@@ -15,7 +15,7 @@ const prisma = new PrismaClient();
 export async function POST(req: Request, _res: Response) {
   const data = await req.json();
   const { title, url, description, timing } = data;
-  const info = await prisma.urlInfo.create({
+  const urlInfo = await prisma.urlInfo.create({
     data: {
       title,
       url,
@@ -24,10 +24,10 @@ export async function POST(req: Request, _res: Response) {
     },
   });
   // jobとしてすぐに実行してほしいので10秒前くらいで設定
-  const edt = dayjs().subtruct(10, "s");
-  const urlInfo = await prisma.urlInfoQueue.create({
+  const edt = dayjs().subtract(10, "s");
+  const urlInfoQueue = await prisma.urlInfoQueue.create({
     data: {
-      urlInfoId: info.id,
+      urlInfoId: urlInfo.id,
       exec_datetime: edt.toDate(),
     },
   });
