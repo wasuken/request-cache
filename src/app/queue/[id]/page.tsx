@@ -34,7 +34,7 @@ const Page = () => {
   return (
     <>
       <div>
-        <a href="/">back</a>
+        <a href="/queue">back</a>
       </div>
       {queueResultLoading ? (
         <div className={styles.loadingSpinner}></div>
