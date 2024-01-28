@@ -7,17 +7,19 @@ export async function GET(
   req: Request,
   { params }: { params: { id: number } },
 ) {
-  const { id, page = "1", ppage = "10" } = params;
-  const ipage = parseInt(page);
-  const ippage = parseInt(ppage);
-  const skip = ipage * (ipage - 1);
+  const { id } = params;
+  console.log(req.searchParams);
+  const ipage = parseInt(req.nextUrl.searchParams.get("page") || 1) - 1;
+  const ilimit = parseInt(req.nextUrl.searchParams.get("limit") || 10);
+  const take = ilimit;
+  const skip = ilimit * ipage;
   const where = {
     urlInfo: {
       id: parseInt(id),
     },
   };
   const total = await prisma.urlInfoQueueResult.count({ where });
-  const totalPage = Math.ceil(total / ippage);
+  const totalPage = Math.ceil(total / ilimit);
   if (ipage > totalPage) {
     return NextResponse.json(
       {
@@ -26,12 +28,12 @@ export async function GET(
       { status: 400 },
     );
   }
-  if (ippage < 1 || ippage > 10) {
+  if (ilimit < 1 || ilimit > 10) {
     let msg = "";
-    if (ippage < 1) {
-      msg = `invalid parameters: invalid parameters: ppage < 1.`;
+    if (ilimit < 1) {
+      msg = `invalid parameters: invalid parameters: limit < 1.`;
     } else {
-      msg = `invalid parameters: invalid parameters: ppage > 10.`;
+      msg = `invalid parameters: invalid parameters: limit > 10.`;
     }
     return NextResponse.json(
       {
@@ -45,11 +47,14 @@ export async function GET(
     include: {
       urlInfo: true,
     },
-    take: ippage,
+    take,
     skip,
     orderBy: {
       createdAt: "desc",
     },
   });
-  return NextResponse.json({ queueResults, totalPage, total }, { status: 200 });
+  return NextResponse.json(
+    { queueResults, totalPage, total, skip, take, ipage, ilimit },
+    { status: 200 },
+  );
 }
