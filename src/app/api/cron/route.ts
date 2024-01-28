@@ -32,7 +32,11 @@ export async function GET() {
   // console.log("debug", queues);
   for (let i = 0; i < queues.length; i++) {
     // web page取得
-    const res = await fetch(queues[i].urlInfo.url);
+    const res = await fetch(queues[i].urlInfo.url, {
+      headers: {
+        "Cache-Control": "no-cache",
+      },
+    });
     let text = "";
     if (res.ok) {
       text = await res.text();
