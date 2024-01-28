@@ -10,12 +10,14 @@ const Page = () => {
   const params = useParams();
   const id = params.id;
   const [queueResults, setQueueResults] = useState<QueueResult[]>([]);
+  const [total, setTotal] = useState<number>(0);
   const [queueResultLoading, setQueueResultLoading] = useState<boolean>(false);
   const fetchQueueResultList = async () => {
     setQueueResultLoading(true);
     const res = await fetch(`/api/queues/result/${id}`);
     if (res.ok) {
       const resj = await res.json();
+      setTotal(resj.total);
       setQueueResults(
         resj.queueResults.map((x: QueueResultAPIResult) => {
           return {
@@ -35,6 +37,9 @@ const Page = () => {
     <>
       <div>
         <a href="/queue">back</a>
+      </div>
+      <div>
+        total: {total}
       </div>
       {queueResultLoading ? (
         <div className={styles.loadingSpinner}></div>

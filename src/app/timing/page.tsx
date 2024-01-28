@@ -24,7 +24,7 @@ const Page = () => {
     });
     if (res.ok) {
       const resj = await res.json();
-      alert(resj.msg);
+      console.log(resj.msg);
       fetchTimingList().then(() => console.log("fetched"));
     } else {
       console.error("failed", res);
@@ -35,7 +35,7 @@ const Page = () => {
     title: string,
     description: string,
     url: string,
-    timing: number
+    timing: number,
   ) => {
     const res = await fetch(`/api/timing/${id}`, {
       method: "PUT",

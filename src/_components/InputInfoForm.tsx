@@ -78,7 +78,7 @@ export default function InputInfoForm(props: IProps) {
         <input
           id="timing"
           type="number"
-          min="500"
+          min="300"
           className={styles.inputField}
           {...register("timing", {
             required: {
