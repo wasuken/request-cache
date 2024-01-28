@@ -36,6 +36,7 @@ export async function GET() {
       headers: {
         "Cache-Control": "no-cache",
       },
+      next: { revalidate: 1 },
     });
     let text = "";
     if (res.ok) {
