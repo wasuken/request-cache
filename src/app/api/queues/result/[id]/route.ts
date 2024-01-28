@@ -8,7 +8,6 @@ export async function GET(
   { params }: { params: { id: number } },
 ) {
   const { id } = params;
-  console.log(req.searchParams);
   const ipage = parseInt(req.nextUrl.searchParams.get("page") || 1) - 1;
   const ilimit = parseInt(req.nextUrl.searchParams.get("limit") || 10);
   const take = ilimit;
@@ -20,10 +19,16 @@ export async function GET(
   };
   const total = await prisma.urlInfoQueueResult.count({ where });
   const totalPage = Math.ceil(total / ilimit);
-  if (ipage > totalPage) {
+  if (ipage > totalPage || ipage < 0) {
+    let msg = "";
+    if (ipage > totalPage) {
+      msg = `invalid parameters: page(${ipage + 1}) > totalPage(${totalPage}).`;
+    } else {
+      msg = `invalid parameters: page(${ipage + 1}) < 1.`;
+    }
     return NextResponse.json(
       {
-        errorMessage: `invalid parameters: page(${page}) > totalPage(${totalPage}).`,
+        errorMessage: msg,
       },
       { status: 400 },
     );
@@ -31,9 +36,9 @@ export async function GET(
   if (ilimit < 1 || ilimit > 10) {
     let msg = "";
     if (ilimit < 1) {
-      msg = `invalid parameters: invalid parameters: limit < 1.`;
+      msg = `invalid parameters: invalid parameters: limit(${ilimit}) < 1.`;
     } else {
-      msg = `invalid parameters: invalid parameters: limit > 10.`;
+      msg = `invalid parameters: invalid parameters: limit(${ilimit}) > 10.`;
     }
     return NextResponse.json(
       {
