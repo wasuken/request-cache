@@ -20,15 +20,11 @@ async function test_200_post_timing() {
     method: "POST",
     body: JSON.stringify({ title, description, url, timing }),
   });
-  const msg = `${res.ok ? "OK" : "NG"}: http://localhost:3000/api/timing`;
   if (res.ok) {
-    console.log(msg);
     const resj = await res.json();
     return resj.urlInfo.id;
-  } else {
-    console.log(msg);
-    return false;
   }
+  return false;
 }
 
 async function test_200_put_timing(id: number) {
@@ -40,59 +36,24 @@ async function test_200_put_timing(id: number) {
     method: "PUT",
     body: JSON.stringify({ id, title, description, url, timing }),
   });
-  const msg = `${res.ok ? "OK" : "NG"}: ${BASE_URL}/timing/${id}`;
-  if (res.ok) {
-    console.log(msg);
-  } else {
-    console.error(msg);
-  }
-  return res.ok;
-}
-
-async function assert_200_get_fetch(url: string) {
-  const res = await fetch(url);
-  const msg = `${res.ok ? "OK" : "NG"}: ${url}`;
-  if (res.ok) {
-    console.log(msg);
-  } else {
-    console.error(msg);
-  }
-  return res.ok;
-}
-
-async function assert_get_fetch_result_paginate(
-  id: string,
-  url: string,
-  expectResult: boolean,
-) {
-  const res = await fetch(url);
-  const msg = `${res.ok ? "OK" : "NG"}: ${url}`;
-  if (res.ok) {
-    console.log(msg);
-  } else {
-    console.error(msg);
-  }
   return res.ok;
 }
 
 // とりあえず最低限のrequestをわたして、200をかえしてくれるか確認するテスト
 async function test_200() {
   // POST
-  console.log("# POST test");
   const iid = await test_200_post_timing();
+  expect(iid).toBeTruthy();
   if (iid) {
     const id = iid as number;
-    console.log("# PUT test");
     // PUT
-    const pres = await test_200_put_timing(id);
-    console.log("# GET test");
+    expect(await test_200_put_timing(id)).toBeTruthy();
     // GET
-    const gres =
-      (await assert_200_get_fetch(`${BASE_URL}/queues`)) &&
-      (await assert_200_get_fetch(`${BASE_URL}/timings`)) &&
-      (await assert_200_get_fetch(`${BASE_URL}/cron`)) &&
-      (await assert_200_get_fetch(`${BASE_URL}/queues/result`)) &&
-      (await assert_200_get_fetch(`${BASE_URL}/queues/result/${id}`));
+    expect((await fetch(`${BASE_URL}/queues`)).ok).toBeTruthy();
+    expect((await fetch(`${BASE_URL}/timings`)).ok).toBeTruthy();
+    expect((await fetch(`${BASE_URL}/cron`)).ok).toBeTruthy();
+    expect((await fetch(`${BASE_URL}/queues/result`)).ok).toBeTruthy();
+    expect((await fetch(`${BASE_URL}/queues/result/${id}`)).ok).toBeTruthy();
     // ページングテスト
     // const pg_res = await assert_get_fetch_result_paginate(
     //   id,
@@ -101,11 +62,10 @@ async function test_200() {
   } else {
     console.error("failed POST.");
   }
-  console.log("================ finish ================");
 }
 
 describe("API Route Test", () => {
-  it("all test", async () => {
+  it("all 200 test", async () => {
     await clean();
     await test_200();
     await clean();
