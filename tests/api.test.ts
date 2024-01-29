@@ -54,11 +54,6 @@ async function test_200() {
     expect((await fetch(`${BASE_URL}/cron`)).ok).toBeTruthy();
     expect((await fetch(`${BASE_URL}/queues/result`)).ok).toBeTruthy();
     expect((await fetch(`${BASE_URL}/queues/result/${id}`)).ok).toBeTruthy();
-    // ページングテスト
-    // const pg_res = await assert_get_fetch_result_paginate(
-    //   id,
-    //   "${BASE_URL}/queues/result/${id}?page=1",
-    // );
   } else {
     console.error("failed POST.");
   }
@@ -68,6 +63,24 @@ describe("API Route Test", () => {
   it("all 200 test", async () => {
     await clean();
     await test_200();
+    await clean();
+  });
+  it("queueResults paging test", async () => {
+    const id = await test_200_post_timing();
+    // ページングテスト
+    const res = await fetch(`${BASE_URL}/queues/result/${id}?page=1`);
+    expect(res.ok).toBeTruthy();
+
+    const res2 = await fetch(`${BASE_URL}/queues/result/${id}?page=1&limit=10`);
+    expect(res2.ok).toBeTruthy();
+
+    const res3 = await fetch(
+      `${BASE_URL}/queues/result/${id}?page=10&limit=100`,
+    );
+    expect(res3.ok).toBeFalsy();
+
+    const res4 = await fetch(`${BASE_URL}/queues/result/${id}?page=2&limit=10`);
+    expect(res4.ok).toBeFalsy();
     await clean();
   });
 });

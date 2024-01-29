@@ -3,6 +3,41 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+function validate(ipage: number, ilimit: number, totalPage: number) {
+  let msgs = [];
+  if (ipage > totalPage || ipage < 0) {
+    if (ipage > totalPage) {
+      msgs.push(
+        `invalid parameters: page(${ipage + 1}) > totalPage(${totalPage}).`,
+      );
+    } else {
+      msgs.push(`invalid parameters: page(${ipage + 1}) < 1.`);
+    }
+    return NextResponse.json(
+      {
+        errorMessage: msg,
+      },
+      { status: 400 },
+    );
+  }
+  if (ilimit < 1 || ilimit > 10) {
+    let msg = "";
+    if (ilimit < 1) {
+      msgs.push(
+        `invalid parameters: invalid parameters: limit(${ilimit}) < 1.`,
+      );
+    } else {
+      msgs.push(
+        `invalid parameters: invalid parameters: limit(${ilimit}) > 10.`,
+      );
+    }
+  }
+  return {
+    isValid: msgs.length > 0,
+    msgs,
+  };
+}
+
 export async function GET(
   req: Request,
   { params }: { params: { id: number } },
@@ -19,30 +54,11 @@ export async function GET(
   };
   const total = await prisma.urlInfoQueueResult.count({ where });
   const totalPage = Math.ceil(total / ilimit);
-  if (ipage > totalPage || ipage < 0) {
-    let msg = "";
-    if (ipage > totalPage) {
-      msg = `invalid parameters: page(${ipage + 1}) > totalPage(${totalPage}).`;
-    } else {
-      msg = `invalid parameters: page(${ipage + 1}) < 1.`;
-    }
+  const { isValid, msgs } = validate(ipage, ilimit, totalPage);
+  if (isValid) {
     return NextResponse.json(
       {
-        errorMessage: msg,
-      },
-      { status: 400 },
-    );
-  }
-  if (ilimit < 1 || ilimit > 10) {
-    let msg = "";
-    if (ilimit < 1) {
-      msg = `invalid parameters: invalid parameters: limit(${ilimit}) < 1.`;
-    } else {
-      msg = `invalid parameters: invalid parameters: limit(${ilimit}) > 10.`;
-    }
-    return NextResponse.json(
-      {
-        errorMessage: msg,
+        errorMessage: msgs,
       },
       { status: 400 },
     );
