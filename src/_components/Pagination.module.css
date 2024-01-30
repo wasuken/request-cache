@@ -1,0 +1,48 @@
+/* Pagination.module.css */
+.paginationContainer {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.pageItem {
+    margin-right: 4px; /* 連続するページ番号の間隔 */
+}
+
+.pageLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px; /* ボタンの最小幅 */
+    height: 32px; /* ボタンの高さ */
+    border: 1px solid #dee2e6; /* ボタンの境界線色 */
+    background-color: #fff; /* ボタンの背景色 */
+    color: #007bff; /* ボタンの文字色 */
+    border-radius: 0.25rem; /* ボタンの角丸 */
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.875rem; /* フォントサイズ */
+}
+
+.pageLink:hover {
+    background-color: #f8f9fa; /* ホバー時の背景色 */
+}
+
+.pageLinkDisabled {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px; /* ボタンの最小幅 */
+    height: 32px; /* ボタンの高さ */
+    border: 1px solid #dee2e6; /* ボタンの境界線色 */
+    border-radius: 0.25rem; /* ボタンの角丸 */
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.875rem; /* フォントサイズ */
+
+    background-color: #007bff; /* カレントページの背景色 */
+    color: #fff; /* カレントページの文字色 */
+    cursor: default;
+    pointer-events: none; /* ボタンのクリックを無効化 */
+}

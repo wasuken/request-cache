@@ -12,9 +12,11 @@ const Page = () => {
   const [queueResults, setQueueResults] = useState<QueueResult[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [queueResultLoading, setQueueResultLoading] = useState<boolean>(false);
-  const fetchQueueResultList = async () => {
+  const [page, setPage] = useState<number>(1);
+  const fetchQueueResultList = async (p: number) => {
     setQueueResultLoading(true);
-    const res = await fetch(`/api/queues/result/${id}`);
+    setPage(p);
+    const res = await fetch(`/api/queues/result/${id}?page=${p}`);
     if (res.ok) {
       const resj = await res.json();
       setTotal(resj.total);
@@ -24,13 +26,18 @@ const Page = () => {
             ...x,
             exec_datetime: new Date(x.exec_datetime),
           };
-        })
+        }),
       );
     }
     setQueueResultLoading(false);
   };
+  const paginate = (pageNumber: number) => {
+    fetchQueueResultList(pageNumber).then(() =>
+      console.log("fetched queue list."),
+    );
+  };
   useEffect(() => {
-    fetchQueueResultList().then(() => console.log("fetched queue list."));
+    fetchQueueResultList(1).then(() => console.log("fetched queue list."));
   }, []);
 
   return (
@@ -38,13 +45,18 @@ const Page = () => {
       <div>
         <a href="/queue">back</a>
       </div>
-      <div>
-        total: {total}
-      </div>
+      <div>total: {total}</div>
       {queueResultLoading ? (
         <div className={styles.loadingSpinner}></div>
       ) : (
-        <QueueResultList queueResults={queueResults} title="QueueResultList" />
+        <QueueResultList
+          queueResults={queueResults}
+          title="QueueResultList"
+          paginate={paginate}
+          resultsPerPage={10}
+          totalResults={total}
+          curPage={page}
+        />
       )}
     </>
   );
