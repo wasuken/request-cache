@@ -1,6 +1,6 @@
 "use client";
 // QueueList.tsx
-import React from "react";
+import React, { useState } from "react";
 import styles from "./QueueResultList.module.css";
 import Pagination from "./Pagination";
 import { QueueResult } from "@/_const/types";
@@ -22,6 +22,20 @@ const QueueResultList: React.FC<IProps> = ({
   totalResults,
   curPage,
 }) => {
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+
+  // レスポンスの展開状態を切り替える関数
+  const toggleExpand = (id: string) => {
+    setExpandedIds((prevExpandedIds) => {
+      const newExpandedIds = new Set(prevExpandedIds);
+      if (newExpandedIds.has(id)) {
+        newExpandedIds.delete(id);
+      } else {
+        newExpandedIds.add(id);
+      }
+      return newExpandedIds;
+    });
+  };
   return (
     <div className={styles.queueResultList}>
       <h2 className={styles.title}>{title}</h2>
@@ -44,10 +58,14 @@ const QueueResultList: React.FC<IProps> = ({
               </td>
               <td>{queueResult.urlInfo.url}</td>
               <td>{queueResult.exec_datetime.toLocaleString("ja-JP")}</td>
-              <td>
-                {queueResult.response.length > 200
-                  ? queueResult.response.substring(0, 197) + "..."
-                  : queueResult.response}
+              <td
+                onClick={() => toggleExpand(queueResult.id)}
+                style={{ cursor: "pointer" }}
+              >
+                {expandedIds.has(queueResult.id) ||
+                queueResult.response.length <= 200
+                  ? queueResult.response
+                  : queueResult.response.substring(0, 197) + "..."}
               </td>
             </tr>
           ))}
