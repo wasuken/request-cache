@@ -63,7 +63,7 @@ const QueueResultList: React.FC<IProps> = ({
                 style={{ cursor: "pointer" }}
               >
                 {expandedIds.has(queueResult.id) ||
-                queueResult.response.length <= 200
+                  queueResult.response.length <= 200
                   ? queueResult.response
                   : queueResult.response.substring(0, 197) + "..."}
               </td>
