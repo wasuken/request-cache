@@ -3,7 +3,7 @@
 本当に最低限疎通できるか程度のテストをテストDBスキーマに接続したテストコンテナで検証する。
 
 ```sh
-$ dp exec app-test sh
+$ docker compose exec app-test sh
 $ npm test
 ```
 
